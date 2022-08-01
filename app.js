@@ -24,10 +24,10 @@ app.post("/",function(req,res){
             console.log(dataAPI);
 
         });
-        const queryInput= req.body.cityName;
         const apiKey= "41d4e838890f4df1ae8ff3aec44b8029";
-        const url= "https://api.openweathermap.org/data/2.5/weather?q="+ queryInput +"&appid="+ apiKey;
+        const queryInput= req.body.cityName;
         const units= "metric";
+        const url= "https://api.openweathermap.org/data/2.5/weather?q="+ queryInput +"&appid="+ apiKey +"&units="+ units +"";
         https.get(url, function(response){
             console.log(response.statusCode); // to get the status code in the terminal
             // while using the api call response data
