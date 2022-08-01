@@ -1,0 +1,73 @@
+/* Google Fonts  */
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,900&family=Open+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&family=Poppins:wght@400;500;600;700&family=Quicksand:wght@400;500;600&display=swap');
+
+/* font-family: 'Baloo 2', cursive;
+font-family: 'Montserrat', sans-serif;
+font-family: 'Open Sans', sans-serif;
+font-family: 'Poppins', sans-serif;
+font-family: 'Quicksand', sans-serif; */
+
+/* #181a1b #0E141B*/
+/* #ff7e28 */ 
+
+/* background-image:  linear-gradient( to right bottom,rgba(22, 34, 57, 0.85), rgba(13,23,43,0.9)) ,url(../images/5.jpg);
+ */
+        
+    /* color: #f5a425;        rgb(245, 164, 37)
+    #ccc7c7             rgb(204, 199, 199)
+    #252020             rgb(37, 32, 32)
+    #d9d9d9             rgb(217, 217, 217)
+    #303030             rgb(48, 48, 48)
+    #0a1931             rgb(10, 25, 49)
+     */
+/* font-family: 'Quicksand', sans-serif;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-image: linear-gradient(to right, #ff7e28 50%, #fff 50%);
+background-size: 200% 50%;
+background-position: 100%;
+}
+#home .profile h1.my-name:hover{
+transition: all 0.9s cubic-bezier(0, 0, 0.23, 1);
+background-position: 0%;
+}
+
+#home .social-links a {
+display: inline-block;
+color: #fff;
+line-height: 0.6;
+padding: 12px 0 5px 0;
+border-radius: 50%;
+text-align: center;
+width: 42px;
+height: 42px;
+transition: 0.5s ease-in-out;
+text-decoration: none;
+margin-bottom: 4px;
+} */
+
+/* ================================ HTML Page ==================================== */
+
+body{
+    background-image:  linear-gradient( to right bottom,rgba(22, 34, 57, 0.85), rgba(13,23,43,0.9)) ,url(../images/mountain.jpg);
+    overflow-x: hidden;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+}
+
+.form-section{
+    visibility: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
+
