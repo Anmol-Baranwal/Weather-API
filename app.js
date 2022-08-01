@@ -17,15 +17,16 @@ app.get("/", function(req,res){
     res.sendFile(__dirname+"/index.html"); 
 });
 
+const apiKey= process.env.OPEN_WEATHER_API_KEY
+
 app.post("/",function(req,res){
-        request("https://api.openweathermap.org/data/2.5/weather?id=2172797&appid=41d4e838890f4df1ae8ff3aec44b8029", function(error, response, body){
+        request("https://api.openweathermap.org/data/2.5/weather?id=2172797&appid="+ apiKey +"", function(error, response, body){
             
             // to receive the api response in the JSON Format
             var dataAPI=JSON.parse(response.body);
             console.log(dataAPI);
 
         });
-        const apiKey= process.env.OPEN_WEATHER_API_KEY
         const queryInput= req.body.cityName;
         const units= "metric";
         const url= "https://api.openweathermap.org/data/2.5/weather?q="+ queryInput +"&appid="+ apiKey +"&units="+ units +"";
