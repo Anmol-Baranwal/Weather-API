@@ -15,7 +15,7 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <!-- css stylesheet -->
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/output.css">
 
     <!-- fontawesome -->
     <script src="https://kit.fontawesome.com/238cdae898.js" crossorigin="anonymous"></script>
@@ -29,9 +29,12 @@
     <title>Weather of<%= city %>  </title>
 </head>
 <body>
-    <h1><%= city %> &nbsp; <%= image %>  </h1>
-    <hr>
-    <div class="details">
+    <div class="header-content">
+        <div class="header-text"><%= city %></div>
+        <img src="<%= image %>" alt="" class="header-image">
+    </div>
+    <hr class="hrline">
+    <div class="details-content">
         <div class="inner-details">The Temperature is: <%= temperature %> </div>
         <div class="inner-details">The Weather is: <%= description %> </div>
     </div>
