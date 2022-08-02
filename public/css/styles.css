@@ -38,7 +38,7 @@ transition: 0.5s ease-in-out;
 /* ================================ INDEX HTML ==================================== */
 
 body{
-    background-image: url(../images/mountain.jpg);
+    background-image: url(../images/4.jpg);
     /* background-image: linear-gradient(to right bottom, rgba(21, 7, 52, .7), rgba(15, 37, 87, .8)), url(../images/bg_hero.jpg); */
     overflow-x: hidden;
     background-position: center;
@@ -103,8 +103,39 @@ body{
     color: #fff;
     font-family: 'Open Sans', sans-serif;
     letter-spacing: .6px;
-    margin: 20px auto;
+    margin: 5px auto 20px;
     border: solid 2px rgba(0, 0, 0, 0.3);
+}
+
+.btn-ripple {
+	display: inline-block;
+	position: relative;
+	overflow: hidden;
+	transition: all ease-in-out .5s;
+}
+
+.btn-ripple::after {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 25%;
+	height: 100%;
+	width: 50%;
+	background-color: #fff;
+	border-radius: 50%;
+	opacity: 0;
+	pointer-events: none;
+	transition: all ease-in-out 1s;
+	transform: scale(5, 5);
+}
+
+.btn-ripple:active::after {
+	padding: 0;
+	margin: 0;
+	opacity: .2;
+	transition: 0s;
+	transform: scale(0, 0);
 }
 
 /* .main-section .lower-section input:-webkit-autofill,
