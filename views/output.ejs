@@ -30,21 +30,47 @@
 </head>
 <body>
     <div class="details-box">
-        <div class="header-content">
-            <h1 class="header-text"><%= city %></h1>
-            <img src="<%= image %>" alt="" class="header-image" method-tooltip="tooltip" data-bs-placement="right" title="<%= description %>">
-        </div>
-        <hr class="hrline">
-        <div class="details-content">
-            <p class="country-query">India</p> 
-            <h3 class="inner-details"><i class="fas fa-arrow-circle-right"></i>&nbsp;The Temperature is: <%= temperature %> </h3>
-            <h3 class="inner-details"><i class="fas fa-arrow-circle-right"></i>&nbsp;The Weather is: <%= description %> </h3>
-        </div>
+            <div class="header-content">
+                <h1 class="header-text"><%= city %></h1>
+                <img src="<%= image %>" alt="" class="header-image" method-tooltip="tooltip" data-bs-placement="right" title="<%= description %>">
+            </div>
+            <hr class="hrline">
+            <div class="details-content">
+                <p class="country-query">India</p> 
+                <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;The<span class="highlight"> Temperature</span> is:<span class="the-value"> <%= temperature %> </span></h3>
+                <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;The<span class="highlight"> Weather </span>is currently: <span class="the-value"> <%= description %> </span></h3>
+                <h3 id="content-in-detail" onmouseover="myFunc()"><a href="" class="view-in-detail">View in Detail &nbsp; <i class="fas fa-arrow-circle-right"></i></a></h3>
+                <div id="to-display">
+                    <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;The<span class="highlight"> Weather</span> is currently:<span class="the-value"> <%= description %> </span></h3>
+                    <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;The<span class="highlight"> Weather</span> is currently:<span class="the-value"> <%= description %> </span></h3>
+                    <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;The<span class="highlight"> Weather</span> is currently:<span class="the-value"> <%= description %> </span></h3>
+                </div>
+                
+            </div>
     </div>
     <script>
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[method-tooltip="tooltip"]'))
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
           return new bootstrap.Tooltip(tooltipTriggerEl)
         })
+
+        function myFunc() {
+            setTimeout(visible, 500); // delaying the function for 0.5 seconds to ease the process
+        }
+        // setTimeout(() => {
+            function visible() {
+            var x = document.getElementById("content-in-detail");
+            var y = document.getElementById("to-display");
+            
+            if (x.style.display === "block") {
+              y.style.display = "block";
+              x.style.display = "none";
+            } else {
+              x.style.display = "block";
+              y.style.display = "none";
+            }
+          }
+        // }, 1000); 
+
     </script>
 </body>
