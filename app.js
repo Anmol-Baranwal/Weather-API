@@ -53,13 +53,40 @@ app.post("/",function(req,res){
 
                 // const country=weatherData.sys.country;
 
+                // for getting the northern/southern hemisphere
+                var verticalHemisphere="";
+                if(lat>=0)   verticalHemisphere="Northern";
+                else    verticalHemisphere="Southern";
+
+                // for getting the western/eastern hemisphere
+                var horizontalHemisphere="";
+                if(lon>=0)   horizontalHemisphere="Eastern";
+                else    horizontalHemisphere="Western";
+
+                // clody description
+                var cloudyDesc="";
+                if(clouds>=0 && clouds<=10) cloudyDesc="Sunny";
+                else if(clouds>=11 && clouds<=19)   cloudyDesc="Fair";
+                else if(clouds>=20 && clouds<=29)   cloudyDesc="Mostly sunny";
+                else if(clouds>=30 && clouds<=59)   cloudyDesc="Partly cloudy";
+                else if(clouds>=60 && clouds<=69)   cloudyDesc="Partly sunny";
+                else if(clouds>=70 && clouds<=89)   cloudyDesc="Mostly Cloudy";
+                else if(clouds>=90 && clouds<=100)  cloudyDesc="Overcast";
+
+                //comfortability check based on humidity
+                var comfort="";
+                if(hum<=55) comfort="dry & comfortable";
+                else if(hum>=56 && hum<=64) comfort="sticky with muggy evenings";
+                else if(hum>=65) comfort="oppresive moisture";
+
                 const query = queryInput.charAt(0).toUpperCase() + queryInput.slice(1); // capitalising the first letter of the entered query
                 // const regionNamesInEnglish = new Intl.DisplayNames(['en'], { type: 'region' });  // coverting the two letter country abbreviation to full country name
                 // const fullName= regionNamesInEnglish.of(country);  
 
                 res.render('output',{city: query, temperature: temp, description: weatherDescription, image: imageUrl,
                                      maxTemperature: maxTemp, latitute: lat, longitude: lon, humidity: hum,
-                                     visibility: visi, cloudiness: clouds});
+                                     visibility: visi, cloudiness: clouds, cloudDesc: cloudyDesc,
+                                     vH: verticalHemisphere, hH: horizontalHemisphere, comfortLevel: comfort});   // sending additional info related to different fields
 
                 res.end();
             });
