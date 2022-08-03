@@ -43,12 +43,12 @@ app.post("/",function(req,res){
                 const weatherDescription= weatherData.weather[0].description;
                 const icon= weatherData.weather[0].icon;
                 const imageUrl="http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                // const country=weatherData.sys.country;
 
                 const query = queryInput.charAt(0).toUpperCase() + queryInput.slice(1); // capitalising the first letter of the entered query
+                // const regionNamesInEnglish = new Intl.DisplayNames(['en'], { type: 'region' });  // coverting the two letter country abbreviation to full country name
+                // const fullName= regionNamesInEnglish.of(country);  
 
-                // res.write("<p>The weather is currently "+ weatherDescription +"</p>");
-                // res.write("<h1>The temperature in "+ query +" is "+ temp +" degree celsius</h1>");
-                // res.write("<img src="+ imageUrl +" >");
                 res.render('output',{city: query, temperature: temp, description: weatherDescription, image: imageUrl});
 
                 res.end();
