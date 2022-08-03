@@ -29,13 +29,22 @@
     <title>Weather of<%= city %>  </title>
 </head>
 <body>
-    <div class="header-content">
-        <div class="header-text"><%= city %></div>
-        <img src="<%= image %>" alt="" class="header-image">
+    <div class="details-box">
+        <div class="header-content">
+            <h1 class="header-text"><%= city %></h1>
+            <img src="<%= image %>" alt="" class="header-image" method-tooltip="tooltip" data-bs-placement="right" title="<%= description %>">
+        </div>
+        <hr class="hrline">
+        <div class="details-content">
+            <p class="country-query">India</p> 
+            <h3 class="inner-details"><i class="fas fa-arrow-circle-right"></i>&nbsp;The Temperature is: <%= temperature %> </h3>
+            <h3 class="inner-details"><i class="fas fa-arrow-circle-right"></i>&nbsp;The Weather is: <%= description %> </h3>
+        </div>
     </div>
-    <hr class="hrline">
-    <div class="details-content">
-        <div class="inner-details">The Temperature is: <%= temperature %> </div>
-        <div class="inner-details">The Weather is: <%= description %> </div>
-    </div>
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[method-tooltip="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
 </body>
