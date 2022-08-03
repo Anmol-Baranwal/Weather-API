@@ -26,7 +26,7 @@
     </script>
 
     <link rel="icon" type="image/png" href="">
-    <title>Weather of<%= city %>  </title>
+    <title>Weather of <%= city %>  </title>
 </head>
 <body>
     <div class="details-box">
@@ -41,14 +41,13 @@
                 <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;The<span class="highlight"> Weather </span>is currently: <span class="the-value"> <%= description %> </span></h3>
                 <h3 id="content-in-detail" onmouseover="myFunc()"><a href="" class="view-in-detail">View in Detail &nbsp; <i class="fas fa-arrow-circle-right"></i></a></h3>
                 <div id="to-display">
-                    <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;The<span class="highlight"> Latitude</span> of <%= city %> is:<span class="the-value"> <%= latitute %> </span> °N</h3>
-                    <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;The<span class="highlight"> Longitude</span> of <%= city %> is:<span class="the-value"> <%= longitude %> </span> °E</h3>
+                    <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;The<span class="highlight"> Latitude</span> of <%= city %> is:<span class="the-value"> <%= latitute %> </span>in <%= vH %> hemisphere</h3>
+                    <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;The<span class="highlight"> Longitude</span> of <%= city %> is:<span class="the-value"> <%= longitude %> </span>in <%= hH %> hemisphere</h3>
                     <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;The<span class="highlight"> Maximum Temperature</span> is:<span class="the-value"> <%= maxTemperature %> </span> °C</h3>
-                    <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;The<span class="highlight"> Humidity</span> percentage is :<span class="the-value"> <%= humidity %>% </span></h3>
-                    <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;The Percentage of<span class="highlight"> Clouds </span>in the atmosphere is:<span class="the-value"> <%= cloudiness %>% </span></h3>
+                    <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;The<span class="highlight"> Humidity</span> percentage is :<span class="the-value"> <%= humidity %>% </span> overall <%= comfortLevel %> </h3>
+                    <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;The Percentage of<span class="highlight"> Clouds </span>in the atmosphere is:<span class="the-value"> <%= cloudiness %>% (<%= cloudDesc %>) </span></h3>
                     <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;You<span class="highlight"> </span>can see upto:<span class="the-value"> <%= visibility %> km</span> in the sky</h3>
                 </div>
-                
             </div>
     </div>
     <script>
