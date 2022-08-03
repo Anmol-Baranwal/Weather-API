@@ -42,14 +42,24 @@ app.post("/",function(req,res){
                 const temp= weatherData.main.temp;
                 const weatherDescription= weatherData.weather[0].description;
                 const icon= weatherData.weather[0].icon;
-                const imageUrl="http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                const imageUrl= "http://openweathermap.org/img/wn/" + icon + "@2x.png"; // to get the image related to the weather
+                const maxTemp= weatherData.main.temp_max; // max current temperature of the city
+                const lat= weatherData.coord.lat; // the latitude of the city
+                const lon= weatherData.coord.lon; // the longitude of the city
+                const hum= weatherData.main.humidity; // humidity percentage
+                var visi= weatherData.visibility; // visibility in the air
+                visi= visi/100;  // converting from meters to kilometers
+                const clouds= weatherData.clouds.all;  // the percentage of cloudiness
+
                 // const country=weatherData.sys.country;
 
                 const query = queryInput.charAt(0).toUpperCase() + queryInput.slice(1); // capitalising the first letter of the entered query
                 // const regionNamesInEnglish = new Intl.DisplayNames(['en'], { type: 'region' });  // coverting the two letter country abbreviation to full country name
                 // const fullName= regionNamesInEnglish.of(country);  
 
-                res.render('output',{city: query, temperature: temp, description: weatherDescription, image: imageUrl});
+                res.render('output',{city: query, temperature: temp, description: weatherDescription, image: imageUrl,
+                                     maxTemperature: maxTemp, latitute: lat, longitude: lon, humidity: hum,
+                                     visibility: visi, cloudiness: clouds});
 
                 res.end();
             });
