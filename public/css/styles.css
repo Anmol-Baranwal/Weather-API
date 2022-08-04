@@ -7,34 +7,6 @@ font-family: 'Open Sans', sans-serif;
 font-family: 'Poppins', sans-serif;
 font-family: 'Quicksand', sans-serif; */
 
-/* #181a1b #0E141B*/
-/* #ff7e28 */ 
-
-/* background-image:  linear-gradient( to right bottom,rgba(22, 34, 57, 0.85), rgba(13,23,43,0.9)) ,url(../images/5.jpg);
- */
-        
-    /* color: #f5a425;        rgb(245, 164, 37)
-    #ccc7c7             rgb(204, 199, 199)
-    #252020             rgb(37, 32, 32)
-    #d9d9d9             rgb(217, 217, 217)
-    #303030             rgb(48, 48, 48)
-    #0a1931             rgb(10, 25, 49)
-    /* background-color: #d1f3ff;  
-     */
-/* font-family: 'Quicksand', sans-serif;
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-image: linear-gradient(to right, #ff7e28 50%, #fff 50%);
-background-size: 200% 50%;
-background-position: 100%;
-}
-#home .profile h1.my-name:hover{
-transition: all 0.9s cubic-bezier(0, 0, 0.23, 1);
-background-position: 0%;
-}
-transition: 0.5s ease-in-out;
-*/
-
 /* ================================ INDEX HTML ==================================== */
 
 body{
@@ -125,7 +97,7 @@ body{
 	pointer-events: none;
 	position: absolute;
 	top: 0;
-	transition: all ease-in-out 1s;
+	transition: all ease-in-out .7s;
 	transform: scale(5, 5);
 	width: 50%;
 }

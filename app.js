@@ -1,13 +1,15 @@
 //jshint esversion:6
 
-const express=require("express");
-const https=require("https");
-const bodyParser=require("body-parser");
-const request = require("request");
-const { query } = require("express");
+const express= require("express");
+const https= require("https");
+const bodyParser= require("body-parser");
+const request= require("request");
+const { query }= require("express");
 require('dotenv').config(); //for security of API key
+const countries= require("i18n-iso-countries"); // for converting country code to full name
 // const { url } = require("inspector");
 // const { request } = require("http");
+countries.registerLocale(require("i18n-iso-countries/langs/en.json")); // minimizing the file size by specifying the language
 
 const app=express();
 
@@ -47,21 +49,21 @@ app.post("/",function(req,res){
                 const lat= weatherData.coord.lat; // the latitude of the city
                 const lon= weatherData.coord.lon; // the longitude of the city
                 const hum= weatherData.main.humidity; // humidity percentage
-                var visi= weatherData.visibility; // visibility in the air
-                visi= visi/100;  // converting from meters to kilometers
+                var visi= weatherData.visibility; // visibility in the air                 (it may show the same value, but i have checked and it shows different values based on time and place)
+                visi= visi/100;  // converting from meters to kilometers 
                 const clouds= weatherData.clouds.all;  // the percentage of cloudiness
 
-                // const country=weatherData.sys.country;
+                const countryCode=weatherData.sys.country;
 
                 // for getting the northern/southern hemisphere
                 var verticalHemisphere="";
-                if(lat>=0)   verticalHemisphere="Northern";
-                else    verticalHemisphere="Southern";
+                if(lat>=0)   verticalHemisphere="°N in Northern";
+                else    verticalHemisphere="°S in Southern";
 
                 // for getting the western/eastern hemisphere
                 var horizontalHemisphere="";
-                if(lon>=0)   horizontalHemisphere="Eastern";
-                else    horizontalHemisphere="Western";
+                if(lon>=0)   horizontalHemisphere="°E in Eastern";
+                else    horizontalHemisphere="°W in Western";
 
                 // clody description
                 var cloudyDesc="";
@@ -80,12 +82,13 @@ app.post("/",function(req,res){
                 else if(hum>=65) comfort="oppresive moisture";
 
                 const query = queryInput.charAt(0).toUpperCase() + queryInput.slice(1); // capitalising the first letter of the entered query
-                // const regionNamesInEnglish = new Intl.DisplayNames(['en'], { type: 'region' });  // coverting the two letter country abbreviation to full country name
-                // const fullName= regionNamesInEnglish.of(country);  
+                
+                // to convert country abbreviation code to full country name
+                var countryFullName= countries.getName(""+ countryCode +"", "en", {select: "official"});
 
                 res.render('output',{city: query, temperature: temp, description: weatherDescription, image: imageUrl,
                                      maxTemperature: maxTemp, latitute: lat, longitude: lon, humidity: hum,
-                                     visibility: visi, cloudiness: clouds, cloudDesc: cloudyDesc,
+                                     visibility: visi, cloudiness: clouds, cloudDesc: cloudyDesc, countryName: countryFullName, 
                                      vH: verticalHemisphere, hH: horizontalHemisphere, comfortLevel: comfort});   // sending additional info related to different fields
 
                 res.end();
