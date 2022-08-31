@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="keywords" content="">
-    <meta name="author" content="Akanksha Baranwal">
+    <meta name="author" content="Anmol Baranwal">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -25,34 +25,31 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
 
-    <!-- Tailwind CSS -->
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
-
     <link rel="icon" type="image/png" href="">
     <title>Open Weather API</title>
 </head>
 
 <body>
-    <div class="main-section">
-            <form action="/" method="post" class="form-section">                    
-                <div class="main-text">
-                    <h1>Check the Weather according to City Name</h1>
-                </div>
-                <div class="lower-section">
-                    <div class="input-group mb-3">
-                        <!-- <span class="input-group-text" id="basic-addon3">Enter City Name</span> -->
-                        <fieldset>
-                            <input type="text" name="cityName" id="cityInput" class="form-control input-text shadow-none" autocomplete="off"
-                            placeholder="Type City Name ... " aria-label="Type City Name" aria-describedby="basic-addon2">
-                        </fieldset>
-                    </div>
-                    <div class="ripple">    <!--  not working   -->
-                        <button type="submit" data-mdb-ripple-duration="1000ms" data-mdb-ripple-color="aqua"
-                            class="btn-ripple main-button btn btn-primary btn-lg btn-dark shadow-none">Find Out</a>
-                    </div>
-                </div>
-            </form>
+    <header>Check Real Time Weather of your City</header>
+    <section class="box-1">
+        <a href="/weather" class="main-button1 btn btn-lg btn-outline-light shadow-none">Check Weather</a>
+        <a href="/air-quality" class="main-button2 btn btn-lg btn-outline-light shadow-none">Find Air Pollution</a>
+    </section>
+    <section class="box-2">
+        <div class="outer-box">
+            <div class="left-content">
+
+            </div>
+            <div class="right-content">
+                <div class="title">Air Pollution</div>
+                <p class="content">You can check following things :</p>
+            </div>
         </div>
-    </div>
-</body>    
+
+        <div class="description"></div>
+    </section>
+
+
+</body>
+
 </html>
