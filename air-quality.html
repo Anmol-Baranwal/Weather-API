@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="Anmol Baranwal">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- css stylesheet -->
+    <link rel="stylesheet" href="/css/air.css">
+
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/238cdae898.js" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+
+    <!-- Tailwind CSS -->
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+
+    <link rel="icon" type="image/png" href="">
+    <title>Open Weather API</title>
+</head>
+
+<body>
+    <div class="main-section">
+            <form action="/weather" method="post" class="form-section">                    
+                <div class="main-text">
+                    <h1>Check the Air Quality according to City Name</h1>
+                </div>
+                <div class="lower-section">
+                    <div class="input-group mb-3">
+                        <!-- <span class="input-group-text" id="basic-addon3">Enter City Name</span> -->
+                        <fieldset>
+                            <input type="text" name="cityName" id="cityInput" class="form-control input-text shadow-none" autocomplete="off"
+                            placeholder="Type City Name ... " aria-label="Type City Name" aria-describedby="basic-addon2">
+                        </fieldset>
+                    </div>
+                    <div class="ripple">    <!--  not working   -->
+                        <button type="submit" data-mdb-ripple-duration="1000ms" data-mdb-ripple-color="aqua"
+                            class="btn-ripple main-button btn btn-primary btn-lg btn-dark shadow-none">Find Out</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>    
+</html>
