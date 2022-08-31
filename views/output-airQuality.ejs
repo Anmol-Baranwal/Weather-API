@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="Anmol Baranwal">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- css stylesheet -->
+    <link rel="stylesheet" href="/css/output.css">
+
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/238cdae898.js" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+
+    <link rel="icon" type="image/png" href="">
+    <title>Weather of <%= city %>  </title>
+</head>
+<body>
+    <div class="details-box">
+            <div class="header-content">
+
+            </div>
+            <hr class="hrline">
+            <div class="details-content">
+                <p class="country-query">Air Quality Index: <%= airQlt %></p>
+                <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;The<span class="highlight"> Air Quality</span> is:<span class="the-value"> <%= airDescription %> </span> °C</h3>
+                <h3 id="content-in-detail" onmouseover="myFunc()"><a href="" class="view-in-detail">View in Detail (μg/m3) &nbsp; <i class="fas fa-arrow-circle-right"></i></a></h3>
+                <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;The<span class="highlight"> Longitude</span> of <%= city %> is:<span class="the-value"> <%= longitude %> </span><%= hH %> hemisphere</h3>
+                <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;The<span class="highlight"> Latitude</span> of <%= city %> is:<span class="the-value"> <%= latitute %> </span><%= vH %> hemisphere</h3>
+                <div id="to-display">
+                    <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;The<span class="highlight"> Air Quality Index </span> is composed of 8 pollutants namely particulate matter (PM) 10, PM2.5, Ozone (O3), Sulphur dioxide (SO2), nitrogen dioxide (NO2), carbon monoxide (CO), lead (Pb) and ammonia (NH3) and acts as major parameters in deriving the AQI of an area.</h3>
+                    <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;The level of <span class="highlight"> Carbon Monoxide</span> in <%= city %> is:<span class="the-value"> <%= coLevel %> μg/m3</span></h3>
+                    <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;The level of <span class="highlight"> Nitrogen monoxide</span> in <%= city %> is:<span class="the-value"> <%= noLevel %> μg/m3</span></h3>
+                    <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;The level of <span class="highlight"> Nitrogen Dioxide</span> in <%= city %> is:<span class="the-value"> <%= no2Level %> μg/m3</span></h3>
+                    <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;The level of <span class="highlight"> Ozone</span> in <%= city %> is:<span class="the-value"> <%= coLevel %> μg/m3</span></h3>
+                    <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;The level of <span class="highlight"> Ammonia</span> in <%= city %> is:<span class="the-value"> <%= nh3 %> μg/m3</span></h3>
+                    <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;The level of <span class="highlight"> Fine Particles Matter</span> in <%= city %> is:<span class="the-value"> <%= pm2_5 %> μg/m3</span></h3>
+                    <h3 class="inner-details"><i class="fa-solid fa-angles-right"></i>&nbsp;The level of <span class="highlight"> Coarse Particles Matter</span> in <%= city %> is:<span class="the-value"> <%= pm10 %> μg/m3</span></h3>
+
+                </div>
+            </div>
+    </div>
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[method-tooltip="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+
+        function myFunc() {
+            setTimeout(visible, 500); // delaying the function for 0.5 seconds to ease the process
+        }
+        // setTimeout(() => {
+            function visible() {
+            var x = document.getElementById("content-in-detail");
+            var y = document.getElementById("to-display");
+            
+            if (x.style.display === "block") {
+              y.style.display = "block";
+              x.style.display = "none";
+            } else {
+              x.style.display = "block";
+              y.style.display = "none";
+            }
+          }
+        // }, 1000); 
+
+    </script>
+</body>
