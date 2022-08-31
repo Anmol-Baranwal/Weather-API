@@ -4,8 +4,10 @@ const express= require("express");
 const https= require("https");
 const bodyParser= require("body-parser");
 const request= require("request");
-const { query }= require("express");
+const { query, response }= require("express");
 require('dotenv').config(); //for security of API key
+const path = require('path');
+const router = express.Router();
 const countries= require("i18n-iso-countries"); // for converting country code to full name
 // const { url } = require("inspector");
 // const { request } = require("http");
@@ -25,7 +27,77 @@ app.get("/", function(req,res){
 
 const apiKey= process.env.OPEN_WEATHER_API_KEY
 
-app.post("/",function(req,res){
+app.get('/weather',function(req,res){
+    res.sendFile(__dirname+'/weather.html');
+});
+
+app.get('/air-quality',function(req,res){
+    res.sendFile(__dirname+'/air-quality.html');
+});
+
+app.post("/air-quality", function(req,res){
+        request("http://api.openweathermap.org/data/2.5/air_pollution?lat=50&lon=50&appid="+ apiKey +"", function(error, response, body){
+
+            // to get the json response in the console
+            var dataAPI=JSON.parse(response.body);
+            console.log(dataAPI);
+        });
+        const queryInput= req.body.cityName;
+        const lat= weatherData.coord.lat;
+        const lon= weatherData.coord.lon;
+        const url= "http://api.openweathermap.org/data/2.5/air_pollution/forecast?lat="+ lat +"&lon="+ lon +"&appid="+ apiKey +"";
+        https.get(url, function(response){
+            console.log(response.statusCode); // to get the status code in the terminal
+            // while using the api call response data {https://openweathermap.org/api/air-pollution#descr}
+            response.on("data", function(data){
+                const airQuality= JSON.parse(data);
+                const airQualityIndex= airQuality.list[0].main.aqi;
+                const dt= airQuality.list[0].dt;
+                const co= airQuality.list[0].components.co;
+                const no= airQuality.list[0].components.no
+                const no2= airQuality.list[0].components.no2;
+                const o3= airQuality.list[0].components.o3;
+                const so2= airQuality.list[0].components.so2;
+                const pm2_5= airQuality.list[0].components.pm2_5;
+                const pm10= airQuality.list[0].components.pm10;
+                const nh3= airQuality.list[0].components.nh3;
+                
+                const query = queryInput.charAt(0).toUpperCase() + queryInput.slice(1);
+
+                // for getting the northern/southern hemisphere
+                var verticalHemisphere="";
+                if(lat>=0)   verticalHemisphere="°N in Northern";
+                else    verticalHemisphere="°S in Southern";
+
+                // for getting the western/eastern hemisphere
+                var horizontalHemisphere="";
+                if(lon>=0)   horizontalHemisphere="°E in Eastern";
+                else    horizontalHemisphere="°W in Western";
+
+                // cloudy description
+                var airDesc="";
+                if(airQualityIndex==1) airDesc="Good:  No health implications.";
+                else if(airQualityIndex==2)   airDesc="Fair:  Some pollutants might arouse modest health concern for hypersensitive people.";
+                else if(airQualityIndex==3)   airDesc="Moderate:  Healthy people may experience slight irritations, and sensitive individuals will be slightly affected to a larger extent.";
+                else if(airQualityIndex==4)   airDesc="Poor:  People should moderately reduce outdoor activities, they may develop heart & respiratory problems.";
+                else if(airQualityIndex==5)   airDesc="Very Poor: Serious health implications";
+
+                // to convert country abbreviation code to full country name
+                // var countryFullName= countries.getName(""+ countryCode +"", "en", {select: "official"});
+
+                res.render('output-airQuality',{city: query, airQlt: airQualityIndex, date: dt, coLevel: co,
+                    noLevel: no, latitute: lat, longitude: lon, no2Level: no2, o3Level: o3, so2Level: so2,
+                    fineParticles: pm2_5, coarseParticles: pm10, nh3Level: nh3, vH: verticalHemisphere, 
+                    hH: horizontalHemisphere, airDescription: airDesc});   // sending all info related to different fields to the output-airQuality.ejs
+
+                res.end();
+
+
+            });
+        });
+});
+
+app.post("/weather",function(req,res){
         request("https://api.openweathermap.org/data/2.5/weather?id=2172797&appid="+ apiKey +"", function(error, response, body){
             
             // to receive the api response in the JSON Format
@@ -65,7 +137,7 @@ app.post("/",function(req,res){
                 if(lon>=0)   horizontalHemisphere="°E in Eastern";
                 else    horizontalHemisphere="°W in Western";
 
-                // clody description
+                // cloudy description
                 var cloudyDesc="";
                 if(clouds>=0 && clouds<=10) cloudyDesc="Sunny";
                 else if(clouds>=11 && clouds<=19)   cloudyDesc="Fair";
@@ -86,10 +158,10 @@ app.post("/",function(req,res){
                 // to convert country abbreviation code to full country name
                 var countryFullName= countries.getName(""+ countryCode +"", "en", {select: "official"});
 
-                res.render('output',{city: query, temperature: temp, description: weatherDescription, image: imageUrl,
-                                     maxTemperature: maxTemp, latitute: lat, longitude: lon, humidity: hum,
-                                     visibility: visi, cloudiness: clouds, cloudDesc: cloudyDesc, countryName: countryFullName, 
-                                     vH: verticalHemisphere, hH: horizontalHemisphere, comfortLevel: comfort});   // sending additional info related to different fields
+                res.render('output-weather',{city: query, temperature: temp, description: weatherDescription, image: imageUrl,
+                                             maxTemperature: maxTemp, latitute: lat, longitude: lon, humidity: hum,
+                                             visibility: visi, cloudiness: clouds, cloudDesc: cloudyDesc, countryName: countryFullName, 
+                                             vH: verticalHemisphere, hH: horizontalHemisphere, comfortLevel: comfort});   // sending additional info related to different fields
 
                 res.end();
             });
