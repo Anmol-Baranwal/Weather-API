@@ -7,7 +7,7 @@ font-family: 'Open Sans', sans-serif;
 font-family: 'Poppins', sans-serif;
 font-family: 'Quicksand', sans-serif; */
 
-/* ================================ OUTPUT EJS ==================================== */
+/* ================================ OUTPUT WEATHER EJS ==================================== */
 
 body{
     background-image: linear-gradient(to right bottom, rgba(21, 7, 52, .7), rgba(15, 37, 87, .8)), url(../images/4.jpg);
@@ -129,14 +129,43 @@ a.view-in-detail:hover i {
     text-transform: capitalize;
 }
 
+/* ================================ OUTPUT AIR QUALITY EJS ==================================== */
 
+div.less-margin{
+    margin: 30px 50px;
+}
 
+h3.box-style{
+    padding: 6px 5px;
+    margin-right:100px;
+    border: 1px solid #000;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: inherit;
+    line-height: 1.6;
+}
 
+a.detail-highlight{
+    font-weight: 600;
+    text-transform: capitalize;
+}
 
+h3.inside{
+    padding-right: 87px;
+    line-height: 1.5;
+}
 
+h3.extra-style{
+    margin-bottom: -20px;
+}
 
+.superscript {
+    position: relative;
+    top: -0.4em;
+  }
 
+h3.header-date{
+    margin: 0 20px -16px;
 
-
-
+}
 
