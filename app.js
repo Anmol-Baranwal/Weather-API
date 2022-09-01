@@ -36,25 +36,27 @@ app.get('/air-quality',function(req,res){
 });
 
 app.post("/air-quality", function(req,res){
-        request("http://api.openweathermap.org/data/2.5/air_pollution?lat=50&lon=50&appid="+ apiKey +"", function(error, response, body){
+        request("https://api.openweathermap.org/data/2.5/air_pollution?lat=50&lon=50&appid="+ apiKey +"", function(error, response, body){
 
             // to get the json response in the console
             var dataAPI=JSON.parse(response.body);
             console.log(dataAPI);
         });
         const queryInput= req.body.cityName;
-        const lat= weatherData.coord.lat;
-        const lon= weatherData.coord.lon;
-        const url= "http://api.openweathermap.org/data/2.5/air_pollution/forecast?lat="+ lat +"&lon="+ lon +"&appid="+ apiKey +"";
+        // const url= "http://api.openweathermap.org/data/2.5/air_pollution/forecast?lat="+ lat +"&lon="+ lon +"&appid="+ apiKey +"";
+        const url= "https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=50&lon=50&appid=41d4e838890f4df1ae8ff3aec44b8029";
+
         https.get(url, function(response){
             console.log(response.statusCode); // to get the status code in the terminal
             // while using the api call response data {https://openweathermap.org/api/air-pollution#descr}
             response.on("data", function(data){
                 const airQuality= JSON.parse(data);
+                const lat= airQuality.coord.lat;
+                const lon= airQuality.coord.lon;
                 const airQualityIndex= airQuality.list[0].main.aqi;
                 const dt= airQuality.list[0].dt;
                 const co= airQuality.list[0].components.co;
-                const no= airQuality.list[0].components.no
+                const no= airQuality.list[0].components.no;
                 const no2= airQuality.list[0].components.no2;
                 const o3= airQuality.list[0].components.o3;
                 const so2= airQuality.list[0].components.so2;
@@ -76,15 +78,15 @@ app.post("/air-quality", function(req,res){
 
                 // cloudy description
                 var airDesc="";
-                if(airQualityIndex==1) airDesc="Good:  No health implications.";
-                else if(airQualityIndex==2)   airDesc="Fair:  Some pollutants might arouse modest health concern for hypersensitive people.";
-                else if(airQualityIndex==3)   airDesc="Moderate:  Healthy people may experience slight irritations, and sensitive individuals will be slightly affected to a larger extent.";
-                else if(airQualityIndex==4)   airDesc="Poor:  People should moderately reduce outdoor activities, they may develop heart & respiratory problems.";
-                else if(airQualityIndex==5)   airDesc="Very Poor: Serious health implications";
+                if(airQualityIndex==1) airDesc="Good :  No health implications.";
+                else if(airQualityIndex==2)   airDesc="Fair :  Some pollutants might arouse modest health concern for hypersensitive people.";  
+                else if(airQualityIndex==3)   airDesc="Moderate :  Healthy people may experience slight irritations, and sensitive individuals will be slightly affected to a larger extent.";
+                else if(airQualityIndex==4)   airDesc="Poor :  People should moderately reduce outdoor activities, they may develop heart & respiratory problems.";
+                else if(airQualityIndex==5)   airDesc="Very Poor : Serious health implications";
 
                 // to convert country abbreviation code to full country name
                 // var countryFullName= countries.getName(""+ countryCode +"", "en", {select: "official"});
-
+                
                 res.render('output-airQuality',{city: query, airQlt: airQualityIndex, date: dt, coLevel: co,
                     noLevel: no, latitute: lat, longitude: lon, no2Level: no2, o3Level: o3, so2Level: so2,
                     fineParticles: pm2_5, coarseParticles: pm10, nh3Level: nh3, vH: verticalHemisphere, 
