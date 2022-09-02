@@ -27,6 +27,10 @@ app.get("/", function(req,res){
 
 const apiKey= process.env.OPEN_WEATHER_API_KEY
 
+var lat;
+var lon;
+var queryInput;
+
 app.get('/weather',function(req,res){
     res.sendFile(__dirname+'/weather.html');
 });
@@ -39,22 +43,38 @@ app.post("/air-quality", function(req,res){
         request("https://api.openweathermap.org/data/2.5/air_pollution?lat=50&lon=50&appid="+ apiKey +"", function(error, response, body){
 
             // to get the json response in the console
+            queryInput= req.body.zipCode;
             var dataAPI=JSON.parse(response.body);
             console.log(dataAPI);
         });
-        const queryInput= req.body.cityName;
-        // const url= "http://api.openweathermap.org/data/2.5/air_pollution/forecast?lat="+ lat +"&lon="+ lon +"&appid="+ apiKey +"";
-        const url= "https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=50&lon=50&appid=41d4e838890f4df1ae8ff3aec44b8029";
+        
+        const urlCoordinate= "http://api.openweathermap.org/geo/1.0/zip?zip="+ queryInput +","+ countryCode +"&appid="+ apiKey +"";
+        
+        https.get(urlCoordinate, function(response){
+            response.on("data", function(data){
+                const zipData= JSON.parse(data);
+                lat= zipData.lat; // the latitude of the city
+                lon= zipData.lon;
+                queryInput= zip.name;
+            });
+        });
+
+        // 1. We can get the zip code from the user & retrieve the country code from that location thus making air pollution api call of openweathermap
+        // 2. We can get the address from the user thus getting the more accurate coordinates and making the api call of openweathermap
+        // I am following the first approach to get the outcome
+       
+        const url= "http://api.openweathermap.org/data/2.5/air_pollution/forecast?lat="+ lat +"&lon="+ lon +"&appid="+ apiKey +"";
+        // const url= "https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=50&lon=50&appid="+ apiKey + "";
 
         https.get(url, function(response){
             console.log(response.statusCode); // to get the status code in the terminal
             // while using the api call response data {https://openweathermap.org/api/air-pollution#descr}
             response.on("data", function(data){
                 const airQuality= JSON.parse(data);
-                const lat= airQuality.coord.lat;
-                const lon= airQuality.coord.lon;
+                lat= airQuality.coord.lat;
+                lon= airQuality.coord.lon;
                 const airQualityIndex= airQuality.list[0].main.aqi;
-                const dt= airQuality.list[0].dt;
+                const unixTime= airQuality.list[0].dt;
                 const co= airQuality.list[0].components.co;
                 const no= airQuality.list[0].components.no;
                 const no2= airQuality.list[0].components.no2;
@@ -65,6 +85,11 @@ app.post("/air-quality", function(req,res){
                 const nh3= airQuality.list[0].components.nh3;
                 
                 const query = queryInput.charAt(0).toUpperCase() + queryInput.slice(1);
+
+                const getBrowserLocale = () => navigator.language || navigator.browserLanguage || (navigator.languages || ["en"])[0]
+                const date= new Date(unixTime*1000);
+                const options={month: 'short', day: 'numeric', year: 'numeric'};
+                const dt= date.toLocaleDateString(getBrowserLocale, options);
 
                 // for getting the northern/southern hemisphere
                 var verticalHemisphere="";
@@ -94,9 +119,9 @@ app.post("/air-quality", function(req,res){
 
                 res.end();
 
-
             });
         });
+        
 });
 
 app.post("/weather",function(req,res){
@@ -107,7 +132,7 @@ app.post("/weather",function(req,res){
             console.log(dataAPI);
 
         });
-        const queryInput= req.body.cityName;
+        queryInput= req.body.cityName;
         const units= "metric";
         const url= "https://api.openweathermap.org/data/2.5/weather?q="+ queryInput +"&appid="+ apiKey +"&units="+ units +"";
         https.get(url, function(response){
@@ -120,8 +145,8 @@ app.post("/weather",function(req,res){
                 const icon= weatherData.weather[0].icon;
                 const imageUrl= "http://openweathermap.org/img/wn/" + icon + "@2x.png"; // to get the image related to the weather
                 const maxTemp= weatherData.main.temp_max; // max current temperature of the city
-                const lat= weatherData.coord.lat; // the latitude of the city
-                const lon= weatherData.coord.lon; // the longitude of the city
+                lat= weatherData.coord.lat; // the latitude of the city
+                lon= weatherData.coord.lon; // the longitude of the city
                 const hum= weatherData.main.humidity; // humidity percentage
                 var visi= weatherData.visibility; // visibility in the air                 (it may show the same value, but i have checked and it shows different values based on time and place)
                 visi= visi/100;  // converting from meters to kilometers 
@@ -169,6 +194,7 @@ app.post("/weather",function(req,res){
             });
 
         });
+        
 });
 
 app.listen(5000 || process.env.PORT ,function(req,res){

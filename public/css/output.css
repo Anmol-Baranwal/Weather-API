@@ -12,7 +12,7 @@ font-family: 'Quicksand', sans-serif; */
 body{
     background-image: linear-gradient(to right bottom, rgba(21, 7, 52, .7), rgba(15, 37, 87, .8)), url(../images/4.jpg);
     background-position: center;
-    height: 100vh;
+    min-height: 100vh;
     overflow-x: hidden;
 }
 
