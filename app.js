@@ -48,31 +48,34 @@ app.post("/air-quality", function(req,res){
             console.log(dataAPI);
         });
         
-        const urlCoordinate= "http://api.openweathermap.org/geo/1.0/zip?zip="+ queryInput +","+ countryCode +"&appid="+ apiKey +"";
+        const countryCode="IN";
+        const urlCoordinate= "https://api.openweathermap.org/geo/1.0/zip?zip="+ queryInput +","+ countryCode +"&appid="+ apiKey +"";
         
         https.get(urlCoordinate, function(response){
             response.on("data", function(data){
                 const zipData= JSON.parse(data);
                 lat= zipData.lat; // the latitude of the city
                 lon= zipData.lon;
-                queryInput= zip.name;
+                queryInput= zipData.name;
             });
+            res.end();
         });
 
         // 1. We can get the zip code from the user & retrieve the country code from that location thus making air pollution api call of openweathermap
         // 2. We can get the address from the user thus getting the more accurate coordinates and making the api call of openweathermap
-        // I am following the first approach to get the outcome
+        // Earlier I was making a api call to openweathermap from the zip code entered by user & country code by opencage, then making final api call with the coordinates to openweathermap
+        // But I think the opencage api would be sufficient for the thing so I am making the changes, In case you want to see then see commit history
        
-        const url= "http://api.openweathermap.org/data/2.5/air_pollution/forecast?lat="+ lat +"&lon="+ lon +"&appid="+ apiKey +"";
-        // const url= "https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=50&lon=50&appid="+ apiKey + "";
+        const url= "https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat="+ lat +"&lon="+ lon +"&appid="+ apiKey +"";
 
         https.get(url, function(response){
             console.log(response.statusCode); // to get the status code in the terminal
+            console.log(url);
             // while using the api call response data {https://openweathermap.org/api/air-pollution#descr}
             response.on("data", function(data){
-                const airQuality= JSON.parse(data);
-                lat= airQuality.coord.lat;
-                lon= airQuality.coord.lon;
+                const airQuality= JSON.parse(JSON.stringify(data));
+                // lat= airQuality.coord.lat;
+                // lon= airQuality.coord.lon;
                 const airQualityIndex= airQuality.list[0].main.aqi;
                 const unixTime= airQuality.list[0].dt;
                 const co= airQuality.list[0].components.co;
@@ -109,8 +112,6 @@ app.post("/air-quality", function(req,res){
                 else if(airQualityIndex==4)   airDesc="Poor :  People should moderately reduce outdoor activities, they may develop heart & respiratory problems.";
                 else if(airQualityIndex==5)   airDesc="Very Poor : Serious health implications";
 
-                // to convert country abbreviation code to full country name
-                // var countryFullName= countries.getName(""+ countryCode +"", "en", {select: "official"});
                 
                 res.render('output-airQuality',{city: query, airQlt: airQualityIndex, date: dt, coLevel: co,
                     noLevel: no, latitute: lat, longitude: lon, no2Level: no2, o3Level: o3, so2Level: so2,
@@ -197,7 +198,7 @@ app.post("/weather",function(req,res){
         
 });
 
-app.listen(5000 || process.env.PORT ,function(req,res){
-    console.log("server is running at port 5000");
+app.listen(3000 || process.env.PORT ,function(req,res){
+    console.log("server is running at port 3000");
 });
 
