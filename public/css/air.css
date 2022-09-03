@@ -52,19 +52,19 @@ body{
     font-family: 'Quicksand', sans-serif;
     font-weight: 600;
     letter-spacing: 2.1px;
-    padding-left: 25%;
+    padding-left: 8%;
 }
 
-.form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+.main-section ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #252020 !important;
     opacity: 1; /* Firefox */
 }
 
-.form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
+.main-section:-ms-input-placeholder { /* Internet Explorer 10-11 */
     color: #252020 !important;
 }
 
-.form-control::-ms-input-placeholder { /* Microsoft Edge */
+.main-section::-ms-input-placeholder { /* Microsoft Edge */
     color: #252020 !important;
 }
 

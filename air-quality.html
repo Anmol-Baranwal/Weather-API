@@ -53,15 +53,16 @@
                 </div>
                 <div class="lower-section">
                     <div class="input-group mb-3">
-                        <!-- <span class="input-group-text" id="basic-addon3">Enter City Name</span> -->
                         <fieldset>
-                            <input type="text" name="zipCode" id="zipInput" class="form-control input-text shadow-none" autocomplete="off"
-                            placeholder="Type ZIP Code ... " aria-label="Type Zip Code" aria-describedby="basic-addon2">
+                            <input type="text" name="addressUser" id="addressInput" class="form-control input-text shadow-none" autocomplete="off"
+                            placeholder="Type Address ... " aria-label="Type Address" aria-describedby="basic-addon2">
                         </fieldset>
                     </div>
                     <div class="ripple">    <!--  not working   -->
                         <button type="submit" data-mdb-ripple-duration="1000ms" data-mdb-ripple-color="aqua"
                             class="btn-ripple main-button btn btn-primary btn-lg btn-dark shadow-none">Find Out</a>
+                    </div><div class="control">
+                        <div id="place"></div>
                     </div>
                 </div>
             </form>
