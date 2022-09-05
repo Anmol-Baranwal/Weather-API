@@ -9,6 +9,7 @@ require('dotenv').config(); //for security of API key
 const path = require('path');
 const router = express.Router();
 const countries= require("i18n-iso-countries"); // for converting country code to full name
+const fetch= require("node-fetch");
 // const { url } = require("inspector");
 // const { request } = require("http");
 countries.registerLocale(require("i18n-iso-countries/langs/en.json")); // minimizing the file size by specifying the language
@@ -28,10 +29,12 @@ app.get("/", function(req,res){
 const apiKey= process.env.OPEN_WEATHER_API_KEY
 const cageAPIKey= process.env.OPEN_CAGE_API_KEY
 
+
+var nationCode;
 var latCopy;
 var lonCopy;
-var queryInput;
-var nationCode;
+var val=1, val_1=2;
+var latitude= function main() {};
 
 app.get('/weather',function(req,res){
     res.sendFile(__dirname+'/weather.html');
@@ -45,42 +48,71 @@ app.post("/air-quality", function(req,res){
         request("https://api.openweathermap.org/data/2.5/air_pollution?lat=50&lon=50&appid="+ apiKey +"", function(error, response, body){
 
             // to get the json response in the console
-            queryInput= req.body.addressUser;
             var dataAPI=JSON.parse(response.body);
-            console.log(dataAPI);
+            // console.log(dataAPI);
         });
         
-        // const urlCoordinate= "https://api.opencagedata.com/geocode/v1/json?q="+ queryInput +"&key="+ cageAPIKey +"";
-        
-        // https.get(urlCoordinate, function(response){
-        //     response.on("data", function(data){
-        //         const addressData= JSON.parse(data);
-        //         lat= addressData.results[0].geometry.lat; // the latitude of the city
-        //         lon= addressData.results[0].geometry.lng;
-        //         latCopy=lat;
-        //         lonCopy=lon;
-        //         queryInput= addressData.results[0].components.city;
-        //         nationCode=addressData.results[0].components['ISO_3166-1_alpha-2'];
-        //     });
-        // });
-        
+
+        var queryInput= req.body.addressUser;
+        const urlCoordinate= "https://api.opencagedata.com/geocode/v1/json?q="+ queryInput +"&key="+ cageAPIKey +"";
+
+        https.get(urlCoordinate, function(response){
+            let airData='';
+            response.on('data', data => airData += data);
+            response.on('end', () => {
+                const addressData= JSON.parse(airData);
+                const lat= addressData.results[0].geometry.lat; // the latitude of the city
+                const lon= addressData.results[0].geometry.lng;
+                queryInput= addressData.results[0].components.city;
+                const nationCode=addressData.results[0].components['ISO_3166-1_alpha-2'];
+                // pm.set.environment("latCopy",JSON.stringify(lat));
+                // map.set(latCopy, addressData.results[0].geometry.lat);
+
+                function mockApi() {
+                    return new Promise((res, rej) => {
+                        if(val==1)  setTimeout(() => res(addressData.results[0].geometry.lat), 1000)
+                        else if(val==2)  setTimeout(() => res(addressData.results[0].geometry.lng), 1000)
+                    });
+                }
+                async function main() {
+                    const data = await mockApi(val)
+                    showData(addressData.results[0].geometry.lat);
+                    showData1(addressData.results[0].geometry.lng);   
+                }
+                console.log(main());
+            });
+
+            function showData(data) {
+                latCopy= data;
+            }
+            function showData1(data) {
+                lonCopy= data;
+            }
+            console.log();
+        });
+        // const url= "https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat="+  +"&lon="+  +"&appid="+ apiKey +"";
+        // console.log(url);
+
         // 1. We can get the zip code from the user & retrieve the country code from that location thus making air pollution api call of openweathermap
         // 2. We can get the address from the user thus getting the more accurate coordinates and making the api call of openweathermap
         // Earlier I was making a api call to openweathermap from the zip code entered by user & country code by opencage, then making final api call with the coordinates to openweathermap
         // But I think the opencage api would be sufficient for the thing so I am making the changes, In case you want to see then see commit history
-        console.log(lonCopy);
-        
-        // const url= "https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat="+ latCopy +"&lon="+ lonCopy +"&appid="+ apiKey +"";
+
+
+        // const url= "https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat="+ main() +"&lon="+ lon +"&appid="+ apiKey +"";
         const url= "https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=25.3923&lon=82.5533&appid="+ apiKey +"";
 
         https.get(url, function(response){
             console.log(response.statusCode); // to get the status code in the terminal
-            console.log(url);
-            // while using the api call response data {https://openweathermap.org/api/air-pollution#descr}
-            response.on("data", function(data){
-                const airQuality= JSON.parse(JSON.stringify(data));
-                // lat= airQuality.coord.lat;
-                // lon= airQuality.coord.lon;
+            // console.log(url);
+            let resultData='';
+            response.on('data', data => resultData += data);
+            response.on('end', () => {
+                // while using the api call response data {https://openweathermap.org/api/air-pollution#descr}
+                const airQuality=JSON.parse(resultData);
+                // console.log(airQuality);
+                const lat= airQuality.coord.lat;
+                const lon= airQuality.coord.lon;
                 const airQualityIndex= airQuality.list[0].main.aqi;
                 const unixTime= airQuality.list[0].dt;
                 const co= airQuality.list[0].components.co;
