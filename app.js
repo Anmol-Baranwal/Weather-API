@@ -33,6 +33,7 @@ const cageAPIKey= process.env.OPEN_CAGE_API_KEY
 var nationCode;
 var latCopy;
 var lonCopy;
+let dataFinal;
 var val=1, val_1=2;
 var latitude= function main() {};
 
@@ -62,6 +63,7 @@ app.post("/air-quality", function(req,res){
             response.on('end', () => {
                 const addressData= JSON.parse(airData);
                 const lat= addressData.results[0].geometry.lat; // the latitude of the city
+                // console.log(lat);
                 const lon= addressData.results[0].geometry.lng;
                 queryInput= addressData.results[0].components.city;
                 const nationCode=addressData.results[0].components['ISO_3166-1_alpha-2'];
@@ -70,25 +72,36 @@ app.post("/air-quality", function(req,res){
 
                 function mockApi() {
                     return new Promise((res, rej) => {
-                        if(val==1)  setTimeout(() => res(addressData.results[0].geometry.lat), 1000)
-                        else if(val==2)  setTimeout(() => res(addressData.results[0].geometry.lng), 1000)
-                    });
+                        // setTimeout(() => res(addressData.results[0].geometry.lat), 1000)
+                        // res(data).then(token => { return token });
+                        res(addressData.results[0].geometry.lat);
+                    })
                 }
+
+                // mockApi()
+                //     .then(function(result) {
+                    //   console.log('the result'+result);
+                      
+                //     }).catch(function(err){
+                //         console.log('The error'+ err);
+                //     })
+
                 async function main() {
-                    const data = await mockApi(val)
-                    showData(addressData.results[0].geometry.lat);
-                    showData1(addressData.results[0].geometry.lng);   
+                    // let data = await mockApi(addressData.results[0].geometry.lat);
+                    dataFinal = await mockApi(urlCoordinate);
+                    // console.log('data final val is '+dataFinal);
+                    // showData1(addressData.results[0].geometry.lng);
+                       
                 }
-                console.log(main());
+                console.log('the state is'+main());
+                console.log('data final val is '+dataFinal);
             });
 
             function showData(data) {
-                latCopy= data;
+                console.log('inside showdata');
+                console.log('data in var is '+dataFinal);
             }
-            function showData1(data) {
-                lonCopy= data;
-            }
-            console.log();
+            // console.log('latitude is '+ latCopy);
         });
         // const url= "https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat="+  +"&lon="+  +"&appid="+ apiKey +"";
         // console.log(url);
@@ -303,4 +316,3 @@ app.post("/weather",function(req,res){
 app.listen(3000 || process.env.PORT ,function(req,res){
     console.log("server is running at port 3000");
 });
-
