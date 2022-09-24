@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Anmol-Baranwal/Weather-API#readme",
   "dependencies": {
+    "@opencage/geosearch-core": "^0.0.17",
     "body-parser": "^1.20.0",
     "dotenv": "^16.0.1",
     "ejs": "^3.1.8",
@@ -24,7 +25,7 @@
     "https": "^1.0.0",
     "i18n-iso-countries": "^7.5.0",
     "node-fetch": "^2.6.7",
-    "nodemon": "^2.0.19",
+    "nodemon": "^2.0.20",
     "request": "^2.88.2"
   }
 }

@@ -29,6 +29,10 @@
     <!-- Tailwind CSS -->
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 
+    <!-- Opencage Autocomplete geosearch -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@opencage/geosearch-bundle/dist/css/autocomplete-theme-classic.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@opencage/geosearch-bundle"></script> -->
+
     <link rel="icon" type="image/png" href="">
     <title>Check Air Quality</title>
 </head>
@@ -52,21 +56,35 @@
                     <h1>Check the Air Quality according to Zip Code</h1>
                 </div>
                 <div class="lower-section">
+                    <!-- <div class="control">
+                        <div id="place"></div>
+                    </div> -->
                     <div class="input-group mb-3">
                         <fieldset>
                             <input type="text" name="addressUser" id="addressInput" class="form-control input-text shadow-none" autocomplete="off"
                             placeholder="Type Address ... " aria-label="Type Address" aria-describedby="basic-addon2">
                         </fieldset>
                     </div>
-                    <div class="ripple">    <!--  not working   -->
+                    <!-- not working -->
+                    <div class="ripple">       
                         <button type="submit" data-mdb-ripple-duration="1000ms" data-mdb-ripple-color="aqua"
-                            class="btn-ripple main-button btn btn-primary btn-lg btn-dark shadow-none">Find Out</a>
-                    </div><div class="control">
-                        <div id="place"></div>
+                            class="btn-ripple main-button btn btn-primary btn-lg btn-dark shadow-none">Find Out</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
+    <!-- <script>
+        const options = {
+          key: "oc_gs_codependemo74gzf48ew7fdvs91nba",
+          language: "en" // de,en,es,fr
+        };
+    
+        opencage.algoliaAutocomplete({
+          container: "#place",
+          placeholder: "Place",
+          plugins: [opencage.OpenCageGeoSearchPlugin(options)]
+        });
+    </script> -->
 </body>    
 </html>
