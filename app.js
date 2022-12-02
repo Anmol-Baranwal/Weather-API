@@ -33,8 +33,10 @@ const cageAPIKey= process.env.OPEN_CAGE_API_KEY
 var nationCode;
 var latCopy;
 var lonCopy;
-let dataFinal;
+let dataFinalLat;
+let dataFinalLon;
 var val=1, val_1=2;
+// let url="";
 var latitude= function main() {};
 
 app.get('/weather',function(req,res){
@@ -53,7 +55,6 @@ app.post("/air-quality", function(req,res){
             // console.log(dataAPI);
         });
         
-
         var queryInput= req.body.addressUser;
         const urlCoordinate= "https://api.opencagedata.com/geocode/v1/json?q="+ queryInput +"&key="+ cageAPIKey +"";
 
@@ -65,12 +66,13 @@ app.post("/air-quality", function(req,res){
                 const lat= addressData.results[0].geometry.lat; // the latitude of the city
                 // console.log(lat);
                 const lon= addressData.results[0].geometry.lng;
+                console.log(lon);
                 queryInput= addressData.results[0].components.city;
                 const nationCode=addressData.results[0].components['ISO_3166-1_alpha-2'];
                 // pm.set.environment("latCopy",JSON.stringify(lat));
                 // map.set(latCopy, addressData.results[0].geometry.lat);
 
-                function mockApi() {
+                getLat = () => {
                     return new Promise((res, rej) => {
                         // setTimeout(() => res(addressData.results[0].geometry.lat), 1000)
                         // res(data).then(token => { return token });
@@ -78,31 +80,28 @@ app.post("/air-quality", function(req,res){
                     })
                 }
 
-                // mockApi()
-                //     .then(function(result) {
-                    //   console.log('the result'+result);
-                      
-                //     }).catch(function(err){
-                //         console.log('The error'+ err);
-                //     })
-
-                async function main() {
-                    // let data = await mockApi(addressData.results[0].geometry.lat);
-                    dataFinal = await mockApi(urlCoordinate);
-                    // console.log('data final val is '+dataFinal);
-                    // showData1(addressData.results[0].geometry.lng);
-                       
+                getLon = () => {
+                    return new Promise((res, rej) => {
+                        res(addressData.results[0].geometry.lon);
+                    })
                 }
-                console.log('the state is'+main());
-                console.log('data final val is '+dataFinal);
-            });
 
-            function showData(data) {
-                console.log('inside showdata');
-                console.log('data in var is '+dataFinal);
-            }
+                async function fetchLat() {
+                    // let data = await mockApi(addressData.results[0].geometry.lat);
+                    dataFinalLat = await this.getLat(urlCoordinate);
+                    dataFinalLon = await this.getLon(urlCoordinate);
+                    // let customLat= await dataFinalLat.json();
+                    // customLat= JSON.stringify(customLat);
+                    // customLat= JSON.parse(customLat);
+                    console.log('data final lat inside scope is '+dataFinalLat);
+                    latCopy= customLat;
+                    // return customLat;
+                }
+                // console.log('the state is'+main());  // [object promise]
+                // console.log('data final val is '+dataFinal);
+            });
             // console.log('latitude is '+ latCopy);
-        });
+        
         // const url= "https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat="+  +"&lon="+  +"&appid="+ apiKey +"";
         // console.log(url);
 
@@ -111,19 +110,23 @@ app.post("/air-quality", function(req,res){
         // Earlier I was making a api call to openweathermap from the zip code entered by user & country code by opencage, then making final api call with the coordinates to openweathermap
         // But I think the opencage api would be sufficient for the thing so I am making the changes, In case you want to see then see commit history
 
+        
+        // console.log("data final lat outside scope "+dataFinalLat); // undefined
+        // the lat & lon are undefined
 
-        // const url= "https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat="+ main() +"&lon="+ lon +"&appid="+ apiKey +"";
-        const url= "https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=25.3923&lon=82.5533&appid="+ apiKey +"";
-
+        const url= "https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat="+ latCopy +"&lon="+ lonCopy +"&appid="+ apiKey +"";
+        console.log(url);
+        // const url= "https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=25.3923&lon=82.5533&appid="+ apiKey +"";
         https.get(url, function(response){
             console.log(response.statusCode); // to get the status code in the terminal
             // console.log(url);
+
             let resultData='';
             response.on('data', data => resultData += data);
             response.on('end', () => {
                 // while using the api call response data {https://openweathermap.org/api/air-pollution#descr}
                 const airQuality=JSON.parse(resultData);
-                // console.log(airQuality);
+                console.log(airQuality);
                 const lat= airQuality.coord.lat;
                 const lon= airQuality.coord.lon;
                 const airQualityIndex= airQuality.list[0].main.aqi;
@@ -237,6 +240,7 @@ app.post("/air-quality", function(req,res){
 
             });
         });
+    });
         
 });
 
